@@ -1,24 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=utf-8" %>
 <%@ page import = "java.util.ArrayList" %>
 <%@ page import = "dto.Product" %>
+<%@ page import = "dao.ProductRepository" %>
 <jsp:useBean id="productDAO" class="dao.ProductRepository" scope="session" />
     
 <!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<title>惑前 格废</title>
+<title>靸來拡 氇╇</title>
 </head>
 <body>
 	<jsp:include page = "menu.jsp" />
 	<div class = "jumbotron">
 		<div class = "container">
-			<h1 class="dispaly-3">惑前格废</h1>
+			<h1 class="dispaly-3">靸來拡氇╇</h1>
 			</div>
 		</div>
 		<%
-			ArrayList<Product> listOfProducts = productDAO.getAllProducts();
+			ProductRepository dao = ProductRepository.getInstance();
+			ArrayList<Product> listOfProducts = dao.getAllProducts();
 		%>
 	<div class="container">
 		<div class="row" align="center">
@@ -30,7 +31,7 @@
 				<h3><%=product.getPname()%></h3>
 				<p><%=product.getDescription()%>
 				<p><%=product.getUnitPrice()%>
-				<p><a href ="./product.jsp?id=<%=product.getProductId()%>" class="btn btn-secondary" role="button">惑技 沥焊</a>
+				<p><a href ="./product.jsp?id=<%=product.getProductId()%>" class="btn btn-secondary" role="button">靸侅劯 鞝曤炒</a>
 				</div>
 				<%
 				}

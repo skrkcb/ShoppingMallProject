@@ -1,36 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=utf-8" %>
     <%@ page import = "dto.Product" %>
-<jsp:useBean id="productDAO" class="dao.ProductRepository" scope="session" />
+    <%@page import = "dao.ProductRepository" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<title>»óÇ° »óÁ¦ Á¤º¸</title>
+<title>ìƒí’ˆ ìƒì œ ì •ë³´</title>
 </head>
 <body>
 	<jsp:include page = "menu.jsp" />
 		<div class = "jumbotron">
 			<div class = "container">
-				<h1 class="dispaly-3">»óÇ° Á¤º¸</h1>
+				<h1 class="dispaly-3">ìƒí’ˆ ì •ë³´</h1>
 			</div>
 		</div>
 		<%
 			String id = request.getParameter("id");
-			Product product = productDAO.getProductById(id);
+			ProductRepository dao = ProductRepository.getInstance();
+			Product product = dao.getProductById(id);
 		%>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6">
 					<h3><%=product.getPname()%></h3>
 					<p><%=product.getDescription()%>
-					<p><b>»óÇ° ÄÚµå : </b><span class="badge badge-danger"><%=product.getProductId()%></span>
-					<p><b>Á¦Á¶»ç</b> : <%=product.getManufacturer()%>
-					<p><b>ºÐ·ù</b> : <%=product.getCategory()%>
-					<p><b>Àç°í ¼ö</b> : <%=product.getUnitsInStock() %>
-					<h4><%=product.getUnitPrice()%>¿ø</h4>
-					<p><a href="#" class="btn btn-info">»óÇ° ÁÖ¹®</a> <a href="./products.jsp" class="btn btn-secondary"> »óÇ° ¸ñ·Ï </a>
+					<p><b>ìƒí’ˆ ì½”ë“œ : </b><span class="badge badge-danger"><%=product.getProductId()%></span>
+					<p><b>ì œì¡°ì‚¬</b> : <%=product.getManufacturer()%>
+					<p><b>ë¶„ë¥˜</b> : <%=product.getCategory()%>
+					<p><b>ìž¬ê³  ìˆ˜</b> : <%=product.getUnitsInStock() %>
+					<h4><%=product.getUnitPrice()%>ì›</h4>
+					<p><a href="#" class="btn btn-info">ìƒí’ˆ ì£¼ë¬¸</a> <a href="./products.jsp" class="btn btn-secondary"> ìƒí’ˆ ëª©ë¡ </a>
 					</div>
 					</div>
 					</div>
