@@ -1,46 +1,62 @@
-<%@ page contentType="text/html; charset=utf-8" %>
+<%@ page contentType="text/html; charset=utf-8"%>
+<%@ page import="com.oreilly.servlet.*"%>
+<%@ page import="com.oreilly.servlet.multipart.*"%>
+<%@ page import="java.util.*"%>
 <%@ page import="dto.Product"%>
 <%@ page import="dao.ProductRepository"%>
+
+
 <%
 	request.setCharacterEncoding("UTF-8");
 
-String productId = request.getParameter("productId");
-String name = request.getParameter("name");
-String unitPrice = request.getParameter("unitPrice");
-String description = request.getParameter("description");
-String manufacturer = request.getParameter("manufacturer");
-String category = request.getParameter("category");
-String unitsInStock = request.getParameter("unitsInStock");
-String condition = request.getParameter("condition");
+	String filename = "";
+	String realFolder = "C:\\upload";
+	String encType = "utf-8";
+	int maxSize = 5 * 1024 * 1024;
 
-Integer price;
+	MultipartRequest multi = new MultipartRequest(request, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
 
-if (unitPrice.isEmpty())
-	price = 0;
-else
-	price = Integer.valueOf(unitPrice);
+	String proudctId = multi.getParameter("proudctId");
+	String name = multi.getParameter("name");
+	String unitPrice = multi.getParameter("unitPrice");
+	String description = multi.getParameter("description");	
+	String manufacturer = multi.getParameter("manufacturer");
+	String category = multi.getParameter("category");
+	String unitsInStock = multi.getParameter("unitsInStock");
+	String condition = multi.getParameter("condition");
 
-long stock;
+	Integer price;
 
-if (unitsInStock.isEmpty())
-	stock = 0;
-else
-	stock = Long.valueOf(unitsInStock);
+	long stock;
 
-ProductRepository dao = ProductRepository.getInstance();
+	if (unitPrice.isEmpty())
+		price = 0;
+	else
+		price = Integer.valueOf(unitPrice);
 
-Product newProduct = new Product();
-newProduct.setProductId(productId);
-newProduct.setPname(name);
-newProduct.setUnitPrice(price);
-newProduct.setDescription(description);
-newProduct.setManufacturer(manufacturer);
-newProduct.setCategory(category);
-newProduct.setUnitsInStock(stock);
-newProduct.setCondition(condition);
+	if (unitsInStock.isEmpty())
+		stock = 0;
+	else
+		stock = Long.valueOf(unitsInStock);
 
-dao.addProduct(newProduct);
+	Enumeration files = multi.getFileNames();
+	String fname = (String) files.nextElement();
+	String fileName = multi.getFilesystemName(fname);
 
-response.sendRedirect("products.jsp");
+	ProductRepository dao = ProductRepository.getInstance();
+
+	Product newProduct = new Product();
+	newProduct.setProductId(proudctId);
+	newProduct.setPname(name);
+	newProduct.setUnitPrice(price);
+	newProduct.setDescription(description);
+	newProduct.setManufacturer(manufacturer);
+	newProduct.setCategory(category);
+	newProduct.setUnitsInStock(stock);
+	newProduct.setCondition(condition);
+	newProduct.setFilename(fileName);
+
+	dao.addProduct(newProduct);
+	response.sendRedirect("products.jsp");
 %>
 
